@@ -10,7 +10,7 @@ ansible-playbook playbooks/grafana.yml ### Grafana + Nginx reverse proxy only (t
 ansible-playbook playbooks/prometheus.yml ### Prometheus only (tags: prometheus, datasource)
 ansible-playbook playbooks/node_exporter.yml ### Node Exporter only
 ```
-Before executing the playbooks, make sure the hosts file corresponds to your current network configuration. <br />
+Before executing the playbooks, make sure the hosts file corresponds to your current network configuration. Also make sure that your RSA key has been distributed to target VMs as an authorized_key and you can ssh from Ansible host to target nodes. <br />
 Also community.grafana Ansible module is needed for user and datasouce creation, it can be installed like so:
 ```
 ansible-galaxy collection install community.grafana
