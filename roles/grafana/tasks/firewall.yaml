@@ -1,4 +1,3 @@
----
 - name: Ensure firewalld is installed
   yum:
     name: firewalld
@@ -30,3 +29,6 @@
   with_fileglob:
     - "templates/etc/firewall.d/*.j2"
   notify: restart_firewall
+
+- name: Restart firewall
+  command: /etc/firewall.sh

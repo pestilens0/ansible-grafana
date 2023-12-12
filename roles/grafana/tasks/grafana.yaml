@@ -18,3 +18,10 @@
     name: grafana-server
     state: started
     enabled: yes
+
+- name: Check if Grafana is accessible
+  uri:
+    url: http://localhost:3000
+    method: GET
+    status_code: 200
+  tags: check

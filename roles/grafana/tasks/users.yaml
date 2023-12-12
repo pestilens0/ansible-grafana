@@ -1,0 +1,28 @@
+- name: Create admin grafana user
+  community.grafana.grafana_user:
+    url: "http://localhost:3000"
+    url_username: admin
+    url_password: admin
+    name: "Grafana"
+    email: grafana@grafana.net
+    login: grafana
+    password: "{{grafana_pw}}"
+    is_admin: true
+    state: present
+
+- name: Add grafana user to admin organization
+  community.grafana.grafana_organization_user:
+    url: "http://localhost:3000"
+    url_username: grafana
+    url_password: "{{grafana_pw}}"
+    login: Grafana
+    role: admin
+    state: present
+
+- name: Delete the default admin user
+  community.grafana.grafana_user:
+    url: "http://localhost:3000"
+    url_username: grafana
+    url_password: "{{grafana_pw}}"
+    login: admin
+    state: absent

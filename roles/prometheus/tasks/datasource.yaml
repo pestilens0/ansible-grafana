@@ -1,0 +1,11 @@
+- name: Create Prometheus datasource
+  community.grafana.grafana_datasource:
+    name: "prometheus"
+    grafana_url: "http://localhost:3000"
+    grafana_user: "grafana"
+    grafana_password: "{{grafana_pw}}"
+    org_id: "1"
+    ds_type: "prometheus"
+    ds_url: "http://localhost:9090"
+    time_interval: "15s"
+    is_default: true

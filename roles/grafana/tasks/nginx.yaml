@@ -10,7 +10,8 @@
 - name: Install Nginx package
   yum:
     name: [
-      "nginx"
+      "nginx",
+      "policycoreutils-python"
     ]
     state: present
 
@@ -29,7 +30,12 @@
   template:
     src: templates/etc/nginx/conf.d/grafana.conf.j2
     dest: /etc/nginx/conf.d/grafana.conf
-  notify: restart nginx
+  notify: restart_nginx
 
 - name: Add SELinux exception for httpd_t
   ansible.builtin.command: "semanage permissive -a  httpd_t"
+
+- name: Restart Nginx
+  service:
+    name: nginx.service
+    state: restarted

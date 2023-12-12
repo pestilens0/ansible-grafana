@@ -1,0 +1,6 @@
+---
+- include: prometheus.yaml
+  tags: prometheus
+
+- include: datasource.yaml
+  tags: datasource

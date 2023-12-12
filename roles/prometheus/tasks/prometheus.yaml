@@ -1,0 +1,68 @@
+- name: Create Prometheus user
+  user:
+    name: prometheus
+    system: yes
+    create_home: no
+
+- name: Download Prometheus
+  get_url:
+    url: https://github.com/prometheus/prometheus/releases/download/v2.48.1/prometheus-2.48.1.linux-amd64.tar.gz
+    dest: /tmp/prometheus.tar.gz
+
+- name: Extract Prometheus
+  unarchive:
+    src: /tmp/prometheus.tar.gz
+    dest: /tmp
+    remote_src: yes
+
+- name: Delete prometheus.tar.gz
+  file:
+    path: '/tmp/prometheus.tar.gz'
+    state: absent
+
+- name: Move Prometheus binary to executable Path
+  command: mv /tmp/prometheus-2.48.1.linux-amd64/prometheus /usr/local/bin
+
+- name: Move Promtool binary to executable Path
+  command: mv /tmp/prometheus-2.48.1.linux-amd64/promtool /usr/local/bin
+
+- name: Delete Prometheus tmp folder
+  file:
+    path: '/tmp/prometheus-2.48.1.linux-amd64'
+    state: absent
+
+- name: Create Prometheus data directory
+  file:
+    path: /var/lib/prometheus
+    state: directory
+    owner: prometheus
+
+- name: Add Prometheus systemd service
+  template:
+    src: templates/etc/systemd/system/prometheus.service.j2
+    dest: /etc/systemd/system/prometheus.service
+
+- name: Create Prometheus configuration directory
+  file:
+    path: /etc/prometheus
+    state: directory
+    owner: prometheus
+
+- name: Copy Prometheus configuration file
+  copy:
+    src: templates/etc/prometheus/prometheus.yml
+    dest: /etc/prometheus/prometheus.yml
+    owner: prometheus
+    mode: 0644
+
+- name: Enable and start Prometheus service
+  systemd:
+    name: prometheus
+    enabled: yes
+    state: started
+
+- name: Check if Prometheus is accessible
+  uri:
+    url: http://localhost:9090
+    method: GET
+    status_code: 200

@@ -1,0 +1,47 @@
+---
+- name: Create nodeexporter user
+  user:
+    name: nodeexporter
+    system: yes
+    create_home: no
+
+- name: Download Node Exporter
+  get_url:
+    url: https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz
+    dest: /tmp/node_exporter.tar.gz
+
+- name: Extract Node Exporter
+  unarchive:
+    src: /tmp/node_exporter.tar.gz
+    dest: /tmp
+    remote_src: yes
+
+- name: Delete node_exporter.tar.gz
+  file:
+    path: '/tmp/node_exporter.tar.gz'
+    state: absent
+
+- name: Move Node Exporter to executable path
+  command: mv /tmp/node_exporter-1.7.0.linux-amd64/node_exporter /usr/local/bin
+
+- name: Delete node exporter tmp folder
+  file:
+    path: '/tmp/node_exporter-1.7.0.linux-amd64'
+    state: absent
+
+- name: Add Node Exporter Systemd service
+  template:
+    src: templates/etc/systemd/system/node_exporter.service.j2
+    dest: /etc/systemd/system/node_exporter.service
+
+- name: Enable and start Node Exporter service
+  systemd:
+    name: node_exporter
+    enabled: yes
+    state: started
+
+- name: Check if Node Exporter is accessible
+  uri:
+    url: http://localhost:9100
+    method: GET
+    status_code: 200

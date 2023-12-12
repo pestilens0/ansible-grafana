@@ -7,3 +7,6 @@
 
 - include: nginx.yaml
   tags: nginx
+
+- include: users.yaml
+  tags: users

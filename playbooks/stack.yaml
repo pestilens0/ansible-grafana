@@ -1,0 +1,6 @@
+---
+- hosts: "{{ targets|default('grafana')}}"
+  roles:
+    - role: grafana
+    - role: node_exporter
+    - role: prometheus
