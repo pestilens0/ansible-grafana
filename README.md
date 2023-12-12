@@ -46,8 +46,8 @@ Again, Node Exporter has been setup with some tips from the official guide: http
 
 ## Disclaimers
 Project should not be treated as "production ready", there are many areas of improvement, such as:<br />
-*Adding ansible inventory variables for versions and firewall rules
 *Enhancing the security by adding API token athentication to Grafana API<br />
 *Adding authentication to Prometheus DB<br />
 *Using a more serious database as backed for Grafana, such as Percona<br />
+*Adding ansible inventory variables for versions and firewall rules<br />
 To only note a few.
