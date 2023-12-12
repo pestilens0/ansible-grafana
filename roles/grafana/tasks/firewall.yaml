@@ -1,0 +1,32 @@
+---
+- name: Ensure firewalld is installed
+  yum:
+    name: firewalld
+    state: present
+
+- name: Start and enable firewalld
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Create a directory for firewall rules
+  file:
+    path: /etc/firewall.d
+    state: directory
+    mode: '0755'
+
+- name: Copy the main firewall script to /etc/firewall.sh
+  copy:
+    src: "files/etc/firewall.sh"
+    dest: /etc/firewall.sh
+    mode: '0755'
+
+- name: Copy firewall rule templates to /etc/firewall.d
+  template:
+    src: "{{ item }}"
+    dest: "/etc/firewall.d/{{ item | basename | regex_replace('.j2', '') }}"
+    mode: '0744'
+  with_fileglob:
+    - "templates/etc/firewall.d/*.j2"
+  notify: restart_firewall

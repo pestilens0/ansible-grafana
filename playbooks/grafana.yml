@@ -1,0 +1,4 @@
+---
+- hosts: "{{ targets|default('grafana')}}"
+  roles:
+    - role: grafana

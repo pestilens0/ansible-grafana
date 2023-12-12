@@ -1,0 +1,7 @@
+- name: restart_firewall
+  command: "/etc/firewall.sh"
+
+- name: restart nginx
+  service:
+    name: nginx.service
+    state: restarted

@@ -1,0 +1,9 @@
+---
+- include: firewall.yaml
+  tags: firewall
+
+- include: grafana.yaml
+  tags: grafana
+
+- include: nginx.yaml
+  tags: nginx
