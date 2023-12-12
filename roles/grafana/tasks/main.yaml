@@ -1,4 +1,7 @@
 ---
+- include: ntp.yaml
+  tags: ntp
+
 - include: firewall.yaml
   tags: firewall
 
