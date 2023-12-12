@@ -7,7 +7,7 @@
     gpgcheck: yes
     gpgkey: https://download.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever
 
-- name: Install Nginx package
+- name: Install Nginx and Semanage packages 
   yum:
     name: [
       "nginx",

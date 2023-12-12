@@ -1,4 +1,4 @@
-- name: Create admin grafana user
+- name: Create admin Grafana user
   community.grafana.grafana_user:
     url: "http://localhost:3000"
     url_username: admin
@@ -10,12 +10,12 @@
     is_admin: true
     state: present
 
-- name: Add grafana user to admin organization
+- name: Add Grafana user to admin organization
   community.grafana.grafana_organization_user:
     url: "http://localhost:3000"
     url_username: grafana
     url_password: "{{grafana_pw}}"
-    login: Grafana
+    login: grafana
     role: admin
     state: present
 
