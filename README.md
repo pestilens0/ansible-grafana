@@ -6,7 +6,7 @@ The project has been prepared and deployed on CentOS 7 Minimal with fully update
 Usage:  <br />
 ```
 ansible-playbook playbooks/stack.yml ### Full instalation
-ansible-playbook playbooks/grafana.yml ### Grafana + Nginx reverse proxy only (tags: firewall, grafana, nginx, users)
+ansible-playbook playbooks/grafana.yml ### Grafana + Nginx reverse proxy only (tags: ntp, firewall, grafana, nginx, users)
 ansible-playbook playbooks/prometheus.yml ### Prometheus only (tags: prometheus, datasource)
 ansible-playbook playbooks/node_exporter.yml ### Node Exporter only
 ```
@@ -44,7 +44,7 @@ Prometheus has been setup with some tips from the official guide: https://grafan
 Node Exporter has been added to populate Prometheus with some actual data that can be displayed. The setup is almost identical to Prometheus, it's also using a hardcoded version.<br />
 Again, Node Exporter has been setup with some tips from the official guide: https://grafana.com/docs/grafana-cloud/send-data/metrics/metrics-prometheus/prometheus-config-examples/noagent_linuxnode/#configure-a-dashboard<br /><br />
 
-Once the playbook has been successfully executed, user can access the webserver via http://192.168.8.* (depending on your network setup), login using the credentials grafana:grafana123 and immediately use "Explore" to display data transferred by Node Exporter (metrics with "node" prefix).
+Once the playbook has been successfully executed, user can access the webserver via http://192.168.8.*:8080 (depending on your network setup), login using the credentials grafana:grafana123 and immediately use "Explore" to display data transferred by Node Exporter (metrics with "node" prefix).
 
 ## Disclaimers
 Project should not be treated as "production ready", there are many areas of improvement, such as:<br />
